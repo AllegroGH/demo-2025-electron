@@ -17,6 +17,7 @@ import connectDB from './db';
 async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
   try {
     const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()'); // ";" для pg в конце запроса ставить не обязательно
+    console.log(response.rows);
     return response.rows;
   } catch (e) {
     dialog.showErrorBox('Ошибка', e); // эта ошибка на фронт не выводится (почему-то)

@@ -34,7 +34,7 @@ function App() {
                 <p>Рейтинг: {partner.rating}</p>
               </div>
             </div>
-            <div className="partner-sale partner-data card_heading">
+            <div className="partner_sale partner-data card_heading">
               {partner.discount_percent}%
             </div>
           </li>

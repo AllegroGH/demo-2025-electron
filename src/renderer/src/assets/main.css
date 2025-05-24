@@ -13,9 +13,9 @@
   height: 60px;
 }
 
-/* p {
-  margin: 0;
-} */
+p {
+  margin: 15px;
+}
 
 .page-heading {
   display: flex;
@@ -25,6 +25,10 @@
   height: 60px;
   /* margin: 0;
   padding: 0; */
+}
+
+.card_heading {
+  font-size: 22px;
 }
 
 .partners-list {
@@ -53,16 +57,25 @@
   cursor: pointer;
 }
 
-.card_heading {
+.partner_sale {
   font-size: 22px;
+  margin: 15px;
+  margin-right: 75px;
+}
+
+.partner-data-info {
+  font-size: 16px;
+}
+
+.card_heading {
   align-self: start;
 }
 
-.partner-data {
+/* .partner-data-info {
   display: flex;
   flex-direction: column;
   margin: 14px 40px;
-}
+} */
 
 .form {
   display: flex;
