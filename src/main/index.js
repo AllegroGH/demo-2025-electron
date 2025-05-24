@@ -5,12 +5,21 @@ import icon from '../../resources/icon.png?asset'
 
 import connectDB from './db';
 
-async function foo(event, data) {
+// async function foo(event, data) {
+//   try {
+//     console.log(data)
+//     dialog.showMessageBox({ message: 'message back' })
+//   } catch (e) {
+//     dialog.showErrorBox('Ошибка', e)
+//   }
+// }
+
+async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
   try {
-    console.log(data)
-    dialog.showMessageBox({ message: 'message back' })
+    const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()'); // ";" для pg в конце запроса ставить не обязательно
+    return response.rows;
   } catch (e) {
-    dialog.showErrorBox('Ошибка', e)
+    dialog.showErrorBox('Ошибка', e); // эта ошибка на фронт не выводится (почему-то)
   }
 }
 
@@ -48,7 +57,8 @@ app.whenReady().then(async () => {
 
   global.dbclient = await connectDB();
 
-  ipcMain.handle('sendSignal', foo)
+  // ipcMain.handle('sendSignal', foo)
+  ipcMain.handle('getPartners', getPartners);
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
