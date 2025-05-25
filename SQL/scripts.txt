@@ -11,7 +11,7 @@ DROP FUNCTION IF EXISTS delete_partner;
 
 CREATE TABLE organization_types (
 	id SMALLSERIAL PRIMARY KEY,
-	type TEXT CHECK(type IN ('ЗАО', 'ОАО', 'ПАО', 'ООО'))
+	type TEXT CHECK(type IN ('Р—РђРћ', 'РћРђРћ', 'РџРђРћ', 'РћРћРћ'))
 );
 
 CREATE TABLE partners (
@@ -40,7 +40,7 @@ CREATE TABLE products (
 	min_price NUMERIC(12, 2) 
 );
 
--- Junction-таблица для связи many-to-many между партнерами и продуктами, поэтому partners_products а не partner_products
+-- Junction-С‚Р°Р±Р»РёС†Р° РґР»СЏ СЃРІСЏР·Рё many-to-many РјРµР¶РґСѓ РїР°СЂС‚РЅРµСЂР°РјРё Рё РїСЂРѕРґСѓРєС‚Р°РјРё, РїРѕСЌС‚РѕРјСѓ partners_products Р° РЅРµ partner_products
 CREATE TABLE partners_products (
 	id BIGSERIAL PRIMARY KEY,
 	product_id INT NOT NULL REFERENCES products(id),
@@ -57,27 +57,27 @@ CREATE TABLE material_types (
 
 SET datestyle  = 'DMY';
 
-INSERT INTO organization_types (type) VALUES ('ЗАО'), ('ОАО'), ('ПАО'), ('ООО');
+INSERT INTO organization_types (type) VALUES ('Р—РђРћ'), ('РћРђРћ'), ('РџРђРћ'), ('РћРћРћ');
 
 INSERT INTO partners (org_type_id, name, director_ceo, email, phone, address, inn, rating) VALUES
-	(1, 'База Строитель', 'Иванова Александра Ивановна', 'aleksandraivanova@ml.ru', '493 123 45 67', '652050, Кемеровская область, город Юрга, ул. Лесная, 15', '2222455179', 7),
-	(4, 'Паркет 29', 'Петров Василий Петрович', 'vppetrov@vl.ru', '987 123 56 78',  '164500, Архангельская область, город Северодвинск, ул. Строителей, 18', '3333888520', 7),
-	(3, 'Стройсервис', 'Соловьев Андрей Николаевич', 'ansolovev@st.ru', '812 223 32 00', '188910, Ленинградская область, город Приморск, ул. Парковая, 21', '4440391035', 7),
-	(2, 'Ремонт и отделка', 'Воробьева Екатерина Валерьевна', 'ekaterina.vorobeva@ml.ru', '444 222 33 11',  '143960, Московская область, город Реутов, ул. Свободы, 51', '1111520857', 5),
-	(1, 'МонтажПро', 'Степанов Степан Сергеевич', 'stepanov@stepan.ru', '912 888 33 33', '309500, Белгородская область, город Старый Оскол, ул. Рабочая, 122', '5552431140', 10);
+	(1, 'Р‘Р°Р·Р° РЎС‚СЂРѕРёС‚РµР»СЊ', 'РРІР°РЅРѕРІР° РђР»РµРєСЃР°РЅРґСЂР° РРІР°РЅРѕРІРЅР°', 'aleksandraivanova@ml.ru', '493 123 45 67', '652050, РљРµРјРµСЂРѕРІСЃРєР°СЏ РѕР±Р»Р°СЃС‚СЊ, РіРѕСЂРѕРґ Р®СЂРіР°, СѓР». Р›РµСЃРЅР°СЏ, 15', '2222455179', 7),
+	(4, 'РџР°СЂРєРµС‚ 29', 'РџРµС‚СЂРѕРІ Р’Р°СЃРёР»РёР№ РџРµС‚СЂРѕРІРёС‡', 'vppetrov@vl.ru', '987 123 56 78',  '164500, РђСЂС…Р°РЅРіРµР»СЊСЃРєР°СЏ РѕР±Р»Р°СЃС‚СЊ, РіРѕСЂРѕРґ РЎРµРІРµСЂРѕРґРІРёРЅСЃРє, СѓР». РЎС‚СЂРѕРёС‚РµР»РµР№, 18', '3333888520', 7),
+	(3, 'РЎС‚СЂРѕР№СЃРµСЂРІРёСЃ', 'РЎРѕР»РѕРІСЊРµРІ РђРЅРґСЂРµР№ РќРёРєРѕР»Р°РµРІРёС‡', 'ansolovev@st.ru', '812 223 32 00', '188910, Р›РµРЅРёРЅРіСЂР°РґСЃРєР°СЏ РѕР±Р»Р°СЃС‚СЊ, РіРѕСЂРѕРґ РџСЂРёРјРѕСЂСЃРє, СѓР». РџР°СЂРєРѕРІР°СЏ, 21', '4440391035', 7),
+	(2, 'Р РµРјРѕРЅС‚ Рё РѕС‚РґРµР»РєР°', 'Р’РѕСЂРѕР±СЊРµРІР° Р•РєР°С‚РµСЂРёРЅР° Р’Р°Р»РµСЂСЊРµРІРЅР°', 'ekaterina.vorobeva@ml.ru', '444 222 33 11',  '143960, РњРѕСЃРєРѕРІСЃРєР°СЏ РѕР±Р»Р°СЃС‚СЊ, РіРѕСЂРѕРґ Р РµСѓС‚РѕРІ, СѓР». РЎРІРѕР±РѕРґС‹, 51', '1111520857', 5),
+	(1, 'РњРѕРЅС‚Р°Р¶РџСЂРѕ', 'РЎС‚РµРїР°РЅРѕРІ РЎС‚РµРїР°РЅ РЎРµСЂРіРµРµРІРёС‡', 'stepanov@stepan.ru', '912 888 33 33', '309500, Р‘РµР»РіРѕСЂРѕРґСЃРєР°СЏ РѕР±Р»Р°СЃС‚СЊ, РіРѕСЂРѕРґ РЎС‚Р°СЂС‹Р№ РћСЃРєРѕР», СѓР». Р Р°Р±РѕС‡Р°СЏ, 122', '5552431140', 10);
 
 INSERT INTO product_types (type, multiplier) VALUES
-	('Ламинат', 2.35),	
-	('Массивная доска', 5.15),	
-	('Паркетная доска', 4.34),	
-	('Пробковое покрытие', 1.5);
+	('Р›Р°РјРёРЅР°С‚', 2.35),	
+	('РњР°СЃСЃРёРІРЅР°СЏ РґРѕСЃРєР°', 5.15),	
+	('РџР°СЂРєРµС‚РЅР°СЏ РґРѕСЃРєР°', 4.34),	
+	('РџСЂРѕР±РєРѕРІРѕРµ РїРѕРєСЂС‹С‚РёРµ', 1.5);
 
 INSERT INTO products (type_id, name, article, min_price) VALUES
-	(3, 'Паркетная доска Ясень темный однополосная 14 мм', '8758385', 4456.90),
-	(3, 'Инженерная доска Дуб Французская елка однополосная 12 мм', '8858958', 7330.99),
-	(1, 'Ламинат Дуб дымчато-белый 33 класс 12 мм', '7750282', 1799.33),
-	(1, 'Ламинат Дуб серый 32 класс 8 мм с фаской', '7028748', 3890.41),
-	(4, 'Пробковое напольное клеевое покрытие 32 класс 4 мм', '5012543', 5450.59);
+	(3, 'РџР°СЂРєРµС‚РЅР°СЏ РґРѕСЃРєР° РЇСЃРµРЅСЊ С‚РµРјРЅС‹Р№ РѕРґРЅРѕРїРѕР»РѕСЃРЅР°СЏ 14 РјРј', '8758385', 4456.90),
+	(3, 'РРЅР¶РµРЅРµСЂРЅР°СЏ РґРѕСЃРєР° Р”СѓР± Р¤СЂР°РЅС†СѓР·СЃРєР°СЏ РµР»РєР° РѕРґРЅРѕРїРѕР»РѕСЃРЅР°СЏ 12 РјРј', '8858958', 7330.99),
+	(1, 'Р›Р°РјРёРЅР°С‚ Р”СѓР± РґС‹РјС‡Р°С‚Рѕ-Р±РµР»С‹Р№ 33 РєР»Р°СЃСЃ 12 РјРј', '7750282', 1799.33),
+	(1, 'Р›Р°РјРёРЅР°С‚ Р”СѓР± СЃРµСЂС‹Р№ 32 РєР»Р°СЃСЃ 8 РјРј СЃ С„Р°СЃРєРѕР№', '7028748', 3890.41),
+	(4, 'РџСЂРѕР±РєРѕРІРѕРµ РЅР°РїРѕР»СЊРЅРѕРµ РєР»РµРµРІРѕРµ РїРѕРєСЂС‹С‚РёРµ 32 РєР»Р°СЃСЃ 4 РјРј', '5012543', 5450.59);
 
 INSERT INTO partners_products (product_id, partner_id, product_quantity, date_of_sale) VALUES
 	(1, 1, 15500, '23-03-2023'),
@@ -98,11 +98,11 @@ INSERT INTO partners_products (product_id, partner_id, product_quantity, date_of
 	(2, 5, 25000, '12-06-2024');
 
 INSERT INTO material_types (type, defects_percent) VALUES
-	('Тип материала 1', 0.1),
-	('Тип материала 2', 0.95),
-	('Тип материала 3', 0.28),
-	('Тип материала 4', 0.55),
-	('Тип материала 5', 0.34);
+	('РўРёРї РјР°С‚РµСЂРёР°Р»Р° 1', 0.1),
+	('РўРёРї РјР°С‚РµСЂРёР°Р»Р° 2', 0.95),
+	('РўРёРї РјР°С‚РµСЂРёР°Р»Р° 3', 0.28),
+	('РўРёРї РјР°С‚РµСЂРёР°Р»Р° 4', 0.55),
+	('РўРёРї РјР°С‚РµСЂРёР°Р»Р° 5', 0.34);
 
 CREATE OR REPLACE FUNCTION get_partners_with_discount()
 RETURNS TABLE (
@@ -115,7 +115,7 @@ RETURNS TABLE (
 	address TEXT,
 	inn VARCHAR,
 	rating SMALLINT,
-	total_sold BIGINT, -- только для отладки (в проде можно удалить)
+	total_sold BIGINT, -- С‚РѕР»СЊРєРѕ РґР»СЏ РѕС‚Р»Р°РґРєРё (РІ РїСЂРѕРґРµ РјРѕР¶РЅРѕ СѓРґР°Р»РёС‚СЊ)
 	discount_percent INT
 ) AS $$
 BEGIN
@@ -148,70 +148,70 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION create_partner_with_validation(
 	p_org_type TEXT,
 	p_name TEXT,
-	p_director_ceo TEXT DEFAULT NULL, -- DEFAULT NULL можно не использовать
-	p_email TEXT DEFAULT NULL, -- DEFAULT NULL можно не использовать
-	p_phone TEXT DEFAULT NULL, -- DEFAULT NULL можно не использовать
-	p_address TEXT DEFAULT NULL, -- DEFAULT NULL можно не использовать
-	p_inn TEXT DEFAULT NULL, -- DEFAULT NULL можно не использовать
-	p_rating INT DEFAULT NULL -- DEFAULT NULL можно не использовать
+	p_director_ceo TEXT DEFAULT NULL, -- DEFAULT NULL РјРѕР¶РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+	p_email TEXT DEFAULT NULL, -- DEFAULT NULL РјРѕР¶РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+	p_phone TEXT DEFAULT NULL, -- DEFAULT NULL РјРѕР¶РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+	p_address TEXT DEFAULT NULL, -- DEFAULT NULL РјРѕР¶РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+	p_inn TEXT DEFAULT NULL, -- DEFAULT NULL РјРѕР¶РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
+	p_rating INT DEFAULT NULL -- DEFAULT NULL РјРѕР¶РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ
 ) 
 RETURNS INT AS $$
 DECLARE
 	new_id INT;
 	v_org_type_id SMALLINT;
 BEGIN
-	-- получение id типа организации
+	-- РїРѕР»СѓС‡РµРЅРёРµ id С‚РёРїР° РѕСЂРіР°РЅРёР·Р°С†РёРё
 	SELECT id INTO v_org_type_id 
 	FROM organization_types 
 	WHERE type = p_org_type;
 
-	-- валидация
+	-- РІР°Р»РёРґР°С†РёСЏ
 	IF v_org_type_id IS NULL THEN
-	-- IF p_org_type NOT IN ('ЗАО', 'ОАО', 'ПАО', 'ООО') THEN -- или такой вариант
-		RAISE EXCEPTION 'Недопустимый тип организации: %. Допустимые типы: "ЗАО", "ОАО", "ПАО", "ООО"', p_org_type;
+	-- IF p_org_type NOT IN ('Р—РђРћ', 'РћРђРћ', 'РџРђРћ', 'РћРћРћ') THEN -- РёР»Рё С‚Р°РєРѕР№ РІР°СЂРёР°РЅС‚
+		RAISE EXCEPTION 'РќРµРґРѕРїСѓСЃС‚РёРјС‹Р№ С‚РёРї РѕСЂРіР°РЅРёР·Р°С†РёРё: %. Р”РѕРїСѓСЃС‚РёРјС‹Рµ С‚РёРїС‹: "Р—РђРћ", "РћРђРћ", "РџРђРћ", "РћРћРћ"', p_org_type;
 	END IF;
 
 	IF EXISTS(SELECT 1 FROM partners WHERE name = p_name) THEN
-		RAISE EXCEPTION 'Партнер с именем "%" уже существует', p_name;
+		RAISE EXCEPTION 'РџР°СЂС‚РЅРµСЂ СЃ РёРјРµРЅРµРј "%" СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚', p_name;
 	END IF;
 
 	IF p_name IS NULL OR  p_name = ''  THEN
-		RAISE EXCEPTION 'Имя партнера не может быть пустым';
+		RAISE EXCEPTION 'РРјСЏ РїР°СЂС‚РЅРµСЂР° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј';
 	END IF;
 
 	IF length(p_name) > 255 THEN
-		RAISE EXCEPTION 'Имя партнера слишком длинное (допускается максимум 255 символов)';
+		RAISE EXCEPTION 'РРјСЏ РїР°СЂС‚РЅРµСЂР° СЃР»РёС€РєРѕРј РґР»РёРЅРЅРѕРµ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 255 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF length(p_director_ceo) > 255 THEN
-		RAISE EXCEPTION 'ФИО директора слишком длинное (допускается максимум 255 символов)';
+		RAISE EXCEPTION 'Р¤РРћ РґРёСЂРµРєС‚РѕСЂР° СЃР»РёС€РєРѕРј РґР»РёРЅРЅРѕРµ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 255 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF length(p_email) > 255 THEN
-		RAISE EXCEPTION 'Email слишком длинный (допускается максимум 255 символов)';
+		RAISE EXCEPTION 'Email СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 255 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF p_phone IS NOT NULL AND p_phone !~ '^\d{3} \d{3} \d{2} \d{2}$' THEN
-		RAISE EXCEPTION 'Неверный формат телефона: %. Используйте формат: "XXX XXX XX XX"', p_phone;
+		RAISE EXCEPTION 'РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ С‚РµР»РµС„РѕРЅР°: %. РСЃРїРѕР»СЊР·СѓР№С‚Рµ С„РѕСЂРјР°С‚: "XXX XXX XX XX"', p_phone;
 	END IF;
 
 	IF length(p_address) > 500 THEN
-		RAISE EXCEPTION 'Адрес слишком длинный (допускается максимум 500 символов)';
+		RAISE EXCEPTION 'РђРґСЂРµСЃ СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 500 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF p_inn IS NOT NULL AND EXISTS(SELECT 1 FROM partners WHERE inn = p_inn) THEN
-		RAISE EXCEPTION 'Партнер с ИНН % уже существует (проверьте данные)', p_inn;
+		RAISE EXCEPTION 'РџР°СЂС‚РЅРµСЂ СЃ РРќРќ % СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ (РїСЂРѕРІРµСЂСЊС‚Рµ РґР°РЅРЅС‹Рµ)', p_inn;
 	END IF;
 	
 	IF p_inn !~ '^(\d{10}|\d{12})$' THEN
-		RAISE EXCEPTION 'Неверный формат ИНН: %. Должно быть 10 или 12 цифр (или оставьте поле пустым)', p_inn;
+		RAISE EXCEPTION 'РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РРќРќ: %. Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ 10 РёР»Рё 12 С†РёС„СЂ (РёР»Рё РѕСЃС‚Р°РІСЊС‚Рµ РїРѕР»Рµ РїСѓСЃС‚С‹Рј)', p_inn;
 	END IF;
 
 	IF p_rating < 0 OR p_rating > 100 THEN
-		RAISE EXCEPTION 'Рейтинг должен быть в диапазоне от 0 до 100. Полученное значение: %', p_rating;
+		RAISE EXCEPTION 'Р РµР№С‚РёРЅРі РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІ РґРёР°РїР°Р·РѕРЅРµ РѕС‚ 0 РґРѕ 100. РџРѕР»СѓС‡РµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: %', p_rating;
 	END IF;
 
-	-- вставка данных
+	-- РІСЃС‚Р°РІРєР° РґР°РЅРЅС‹С…
 	INSERT INTO partners (
 		org_type_id, name, director_ceo, email, phone, address, inn, rating
 	) VALUES (
@@ -223,7 +223,7 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE EXCEPTION 'Ошибка при добавлении партнера: %.', SQLERRM; -- для отладки, в проде можно оставить сообщение без описания ошибки
+		RAISE EXCEPTION 'РћС€РёР±РєР° РїСЂРё РґРѕР±Р°РІР»РµРЅРёРё РїР°СЂС‚РЅРµСЂР°: %.', SQLERRM; -- РґР»СЏ РѕС‚Р»Р°РґРєРё, РІ РїСЂРѕРґРµ РјРѕР¶РЅРѕ РѕСЃС‚Р°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ Р±РµР· РѕРїРёСЃР°РЅРёСЏ РѕС€РёР±РєРё
 END;
 $$ LANGUAGE plpgsql;
 
@@ -243,61 +243,61 @@ DECLARE
 	v_org_type_id SMALLINT;
 BEGIN
 	IF NOT EXISTS(SELECT 1 FROM partners WHERE id = p_id) THEN
-		RAISE EXCEPTION 'Партнер с ID % не найден', p_id;
+		RAISE EXCEPTION 'РџР°СЂС‚РЅРµСЂ СЃ ID % РЅРµ РЅР°Р№РґРµРЅ', p_id;
 	END IF;
 
-	-- получение id типа организации
+	-- РїРѕР»СѓС‡РµРЅРёРµ id С‚РёРїР° РѕСЂРіР°РЅРёР·Р°С†РёРё
 	SELECT id INTO v_org_type_id 
 	FROM organization_types 
 	WHERE type = p_org_type;
 
-	-- валидация
+	-- РІР°Р»РёРґР°С†РёСЏ
 	IF v_org_type_id IS NULL THEN
-	-- IF p_org_type NOT IN ('ЗАО', 'ОАО', 'ПАО', 'ООО') THEN -- или такой вариант
-		RAISE EXCEPTION 'Недопустимый тип организации: %. Допустимые типы: "ЗАО", "ОАО", "ПАО", "ООО"', p_org_type;
+	-- IF p_org_type NOT IN ('Р—РђРћ', 'РћРђРћ', 'РџРђРћ', 'РћРћРћ') THEN -- РёР»Рё С‚Р°РєРѕР№ РІР°СЂРёР°РЅС‚
+		RAISE EXCEPTION 'РќРµРґРѕРїСѓСЃС‚РёРјС‹Р№ С‚РёРї РѕСЂРіР°РЅРёР·Р°С†РёРё: %. Р”РѕРїСѓСЃС‚РёРјС‹Рµ С‚РёРїС‹: "Р—РђРћ", "РћРђРћ", "РџРђРћ", "РћРћРћ"', p_org_type;
 	END IF;
 
 	IF EXISTS(SELECT 1 FROM partners WHERE name = p_name AND id <> p_id) THEN
-		RAISE EXCEPTION 'Партнер с именем "%" уже существует', p_name;
+		RAISE EXCEPTION 'РџР°СЂС‚РЅРµСЂ СЃ РёРјРµРЅРµРј "%" СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚', p_name;
 	END IF;
 
 	IF p_name IS NULL OR  p_name = ''  THEN
-		RAISE EXCEPTION 'Имя партнера не может быть пустым';
+		RAISE EXCEPTION 'РРјСЏ РїР°СЂС‚РЅРµСЂР° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј';
 	END IF;
 
 	IF length(p_name) > 255 THEN
-		RAISE EXCEPTION 'Имя партнера слишком длинное (допускается максимум 255 символов)';
+		RAISE EXCEPTION 'РРјСЏ РїР°СЂС‚РЅРµСЂР° СЃР»РёС€РєРѕРј РґР»РёРЅРЅРѕРµ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 255 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF length(p_director_ceo) > 255 THEN
-		RAISE EXCEPTION 'ФИО директора слишком длинное (допускается максимум 255 символов)';
+		RAISE EXCEPTION 'Р¤РРћ РґРёСЂРµРєС‚РѕСЂР° СЃР»РёС€РєРѕРј РґР»РёРЅРЅРѕРµ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 255 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF length(p_email) > 255 THEN
-		RAISE EXCEPTION 'Email слишком длинный (допускается максимум 255 символов)';
+		RAISE EXCEPTION 'Email СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 255 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF p_phone IS NOT NULL AND p_phone !~ '^\d{3} \d{3} \d{2} \d{2}$' THEN
-		RAISE EXCEPTION 'Неверный формат телефона: %. Используйте формат: "XXX XXX XX XX"', p_phone;
+		RAISE EXCEPTION 'РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ С‚РµР»РµС„РѕРЅР°: %. РСЃРїРѕР»СЊР·СѓР№С‚Рµ С„РѕСЂРјР°С‚: "XXX XXX XX XX"', p_phone;
 	END IF;
 
 	IF length(p_address) > 500 THEN
-		RAISE EXCEPTION 'Адрес слишком длинный (допускается максимум 500 символов)';
+		RAISE EXCEPTION 'РђРґСЂРµСЃ СЃР»РёС€РєРѕРј РґР»РёРЅРЅС‹Р№ (РґРѕРїСѓСЃРєР°РµС‚СЃСЏ РјР°РєСЃРёРјСѓРј 500 СЃРёРјРІРѕР»РѕРІ)';
 	END IF;
 
 	IF p_inn IS NOT NULL AND EXISTS(SELECT 1 FROM partners WHERE inn = p_inn AND id <> p_id) THEN
-		RAISE EXCEPTION 'Партнер с ИНН % уже существует (проверьте данные)', p_inn;
+		RAISE EXCEPTION 'РџР°СЂС‚РЅРµСЂ СЃ РРќРќ % СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚ (РїСЂРѕРІРµСЂСЊС‚Рµ РґР°РЅРЅС‹Рµ)', p_inn;
 	END IF;
 	
 	IF p_inn !~ '^(\d{10}|\d{12})$' THEN
-		RAISE EXCEPTION 'Неверный формат ИНН: %. Должно быть 10 или 12 цифр (или оставьте поле пустым)', p_inn;
+		RAISE EXCEPTION 'РќРµРІРµСЂРЅС‹Р№ С„РѕСЂРјР°С‚ РРќРќ: %. Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ 10 РёР»Рё 12 С†РёС„СЂ (РёР»Рё РѕСЃС‚Р°РІСЊС‚Рµ РїРѕР»Рµ РїСѓСЃС‚С‹Рј)', p_inn;
 	END IF;
 
 	IF p_rating < 0 OR p_rating > 100 THEN
-		RAISE EXCEPTION 'Рейтинг должен быть в диапазоне от 0 до 100. Полученное значение: %', p_rating;
+		RAISE EXCEPTION 'Р РµР№С‚РёРЅРі РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РІ РґРёР°РїР°Р·РѕРЅРµ РѕС‚ 0 РґРѕ 100. РџРѕР»СѓС‡РµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ: %', p_rating;
 	END IF;
 
-	-- обновление данных
+	-- РѕР±РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С…
 	UPDATE partners SET
 		org_type_id = v_org_type_id,
 		name = p_name,
@@ -311,14 +311,14 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE EXCEPTION 'Ошибка при обновлении данных партнера: %.', SQLERRM; -- для отладки, в проде можно оставить сообщение без описания ошибки
+		RAISE EXCEPTION 'РћС€РёР±РєР° РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РґР°РЅРЅС‹С… РїР°СЂС‚РЅРµСЂР°: %.', SQLERRM; -- РґР»СЏ РѕС‚Р»Р°РґРєРё, РІ РїСЂРѕРґРµ РјРѕР¶РЅРѕ РѕСЃС‚Р°РІРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ Р±РµР· РѕРїРёСЃР°РЅРёСЏ РѕС€РёР±РєРё
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION delete_partner(p_id INT) RETURNS VOID AS $$
 BEGIN
 	IF NOT EXISTS(SELECT 1 FROM partners WHERE id = p_id) THEN
-		RAISE EXCEPTION 'Партнера с ID % не существует', p_id;
+		RAISE EXCEPTION 'РџР°СЂС‚РЅРµСЂР° СЃ ID % РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚', p_id;
 	END IF;
 
 	DELETE FROM partners WHERE id = p_id;
