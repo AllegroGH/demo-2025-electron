@@ -1,17 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import company_logo from './assets/Мастер пол.png'
 import { Link } from 'react-router';
+import { useLocation } from 'react-router';
 
-function AddPartner() {
+function UpdatePartner() {
   useEffect(() => {
     (async () => {
-      document.title = 'Добавление партнера в базу данных';
+      document.title = 'Обновление данных партнера';
     })()
-  }, [])
+  }, []);
+  const location = useLocation();
+  const [partner, setPartner] = useState(location.state.partner);
+
 
   async function submitHandler(e) {
     e.preventDefault()
-    const partner = {
+    const updatedPartner = {
+      id: partner.id,
       org_type: e.target.org_type.value,
       partner_name: e.target.partner_name.value,
       director_ceo: e.target.director_ceo.value || null,
@@ -21,15 +26,18 @@ function AddPartner() {
       inn: e.target.inn.value || null,
       rating: e.target.rating.value !== '' ? +e.target.rating.value : null,
     }
-    const success = await window.api.addPartner(partner);
-    if (success) document.querySelector('form').reset();
+    const success = await window.api.updatePartner(updatedPartner);
+    if (success) {
+      setPartner(updatedPartner);
+      document.querySelector('form').reset();
+    };
   }
 
   return (
     <>
       <div className="page-heading">
         <img className="logo" src={company_logo} />
-        <h1>Добавление партнера</h1>
+        <h1>Обновление данных партнера</h1>
 
         <Link className="button-right" to={'/'}>
           <button>
@@ -39,7 +47,7 @@ function AddPartner() {
       </div>
       <form onSubmit={(e) => submitHandler(e)}>
         <label htmlFor="org_type">Тип организации:</label>
-        <select id="org_type" required>
+        <select id="org_type" required defaultValue={partner.org_type} >
           <option value="ЗАО">ЗАО</option>
           <option value="ОАО">ОАО</option>
           <option value="ПАО">ПАО</option>
@@ -47,31 +55,31 @@ function AddPartner() {
         </select>
 
         <label htmlFor="partner_name">Наименование организации:</label>
-        <input id="partner_name" type="text" required />
+        <input id="partner_name" type="text" required defaultValue={partner.partner_name} />
 
         <label htmlFor="director_ceo">ФИО директора:</label>
-        <input id="director_ceo" type="text" />
+        <input id="director_ceo" type="text" defaultValue={partner.director_ceo} />
 
         <label htmlFor="email">Email:</label>
-        <input id="email" type="email" />
+        <input id="email" type="email" defaultValue={partner.email} />
 
         <label htmlFor="phone">Телефон:</label>
-        <input id="phone" type="text" />
+        <input id="phone" type="text" defaultValue={partner.phone} />
 
         <label htmlFor="address">Адрес:</label>
-        <input id="address" type="text" />
+        <input id="address" type="text" defaultValue={partner.address} />
 
         <label htmlFor="inn">ИНН:</label>
-        <input id="inn" type="text" />
+        <input id="inn" type="text" defaultValue={partner.inn} />
 
         <label htmlFor="rating">Рейтинг:</label>
-        <input id="rating" type="number" step='1' min='0' max='100' />
+        <input id="rating" type="number" step='1' min='0' max='100' defaultValue={partner.rating} />
 
-        <button className='form-button' type="submit">Добавить партнера в базу данных</button>
+        <button className='form-button' type="submit">Обновить данные партнера</button>
       </form>
     </>
   )
 }
 
-export default AddPartner;
+export default UpdatePartner;
 

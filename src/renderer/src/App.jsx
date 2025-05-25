@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import company_logo from './assets/Мастер пол.png';
 import { Link } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
   const [partners, setPartners] = useState([]);
-
-  // useEffect(() => {
-  //   (async (data = "test") => await window.api.foo(data))()
-  // }, [])
 
   useEffect(() => {
     (async () => {
@@ -25,7 +23,7 @@ function App() {
       </div>
       <ul className='partners-list'>
         {partners.map((partner) => {
-          return <li className="partner-card" key={partner.id}>
+          return <li className="partner-card" key={partner.id} onClick={() => { navigate('/updatePartner', { state: { partner } }) }}>
             <div>
               <p className="partner-card-heading">{partner.org_type} | {partner.partner_name}</p>
               <div>

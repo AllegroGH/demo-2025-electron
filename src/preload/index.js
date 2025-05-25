@@ -4,6 +4,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   getPartners: () => ipcRenderer.invoke('getPartners'),
   addPartner: (partner) => ipcRenderer.invoke('addPartner', partner),
+  updatePartner: (partner) => ipcRenderer.invoke('updatePartner', partner),
 }
 
 if (process.contextIsolated) {

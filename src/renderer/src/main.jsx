@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import AddPartner from './AddPartner'
+import UpdatePartner from './UpdatePartner'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <HashRouter>
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/addPartner' element={<AddPartner />} />
+        <Route path='/updatePartner' element={<UpdatePartner />} />
       </Routes>
     </StrictMode>
   </HashRouter>
