@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { use, useEffect } from 'react'
 import company_logo from './assets/Мастер пол.png'
-import { Link } from 'react-router';
+// import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 function AddPartner() {
   useEffect(() => {
@@ -8,6 +9,7 @@ function AddPartner() {
       document.title = 'Добавление партнера в базу данных';
     })()
   }, [])
+  const navigate = useNavigate();
 
   async function submitHandler(e) {
     e.preventDefault()
@@ -30,12 +32,7 @@ function AddPartner() {
       <div className="page-heading">
         <img className="logo" src={company_logo} />
         <h1>Добавление партнера</h1>
-
-        <Link className="button-right" to={'/'}>
-          <button>
-            Назад
-          </button>
-        </Link>
+        <button className="button-right" onClick={() => { navigate('/') }}>Назад</button>
       </div>
       <form onSubmit={(e) => submitHandler(e)}>
         <label htmlFor="org_type">Тип организации:</label>

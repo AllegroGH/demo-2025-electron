@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import company_logo from './assets/Мастер пол.png';
-import { Link } from 'react-router';
-import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 function App() {
   const navigate = useNavigate();
@@ -38,12 +38,7 @@ function App() {
           </li>
         })}
       </ul>
-
-      <Link to={'/addPartner'}>
-        <button>
-          Добавить партнера
-        </button>
-      </Link>
+      <button onClick={() => { navigate('/addPartner') }}>Добавить партнера</button>
     </>
   )
 }

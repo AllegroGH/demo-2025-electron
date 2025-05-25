@@ -38,7 +38,7 @@ async function addPartner(event, partner) {
       [org_type, partner_name, director_ceo, email, phone, address, inn, rating]);
     const { new_id } = response.rows[0];
 
-    dialog.showMessageBox({
+    await dialog.showMessageBox({
       type: 'info',
       title: 'Сохранение завершено',
       message: `Партнер создан.\nДанные успешно добавлены в таблицу с ID = ${new_id}.`,
@@ -75,10 +75,44 @@ async function updatePartner(event, partner) {
     const response = await global.dbclient.query('SELECT update_partner_with_validation($1, $2, $3, $4, $5, $6, $7, $8, $9)',
       [id, org_type, partner_name, director_ceo, email, phone, address, inn, rating]);
 
-    dialog.showMessageBox({
+    await dialog.showMessageBox({
       type: 'info',
       title: 'Сохранение завершено',
       message: 'Данные партнера успешно обновлены',
+      buttons: ['OK'],
+    });
+    return true;
+  } catch (e) {
+    await dialog.showMessageBox({
+      type: 'error',
+      title: 'Ошибка',
+      message: 'Ошибка при выполнении SQL запроса',
+      detail: e.message,
+      buttons: ['OK']
+    });
+    return false;
+  }
+}
+
+async function deletePartner(event, id) {
+  try {
+    const confirmation = await dialog.showMessageBox({
+      type: 'warning',
+      title: 'Подтверждение внесения данных в БД',
+      message: 'Вы уверены, что хотите удалить партнера?',
+      detail: 'Это действие удалит существующую запись из базы данных.',
+      buttons: ['Сохранить', 'Отмена'],
+      defaultId: 1, // активная кнопка (0 - первая, 1 - вторая)
+      cancelId: 1   // что считать отменой
+    });
+    if (confirmation.response === 1) return false;
+
+    const response = await global.dbclient.query('SELECT delete_partner($1)', [id]);
+
+    await dialog.showMessageBox({
+      type: 'info',
+      title: 'Сохранение завершено',
+      message: 'Данные партнера удалены',
       buttons: ['OK'],
     });
     return true;
@@ -132,6 +166,7 @@ app.whenReady().then(async () => {
   ipcMain.handle('getPartners', getPartners);
   ipcMain.handle('addPartner', addPartner);
   ipcMain.handle('updatePartner', updatePartner);
+  ipcMain.handle('deletePartner', deletePartner);
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)

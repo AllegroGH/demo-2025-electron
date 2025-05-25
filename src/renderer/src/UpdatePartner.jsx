@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import company_logo from './assets/Мастер пол.png'
-import { Link } from 'react-router';
-import { useLocation } from 'react-router';
+// import { Link } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 function UpdatePartner() {
   useEffect(() => {
@@ -9,6 +9,7 @@ function UpdatePartner() {
       document.title = 'Обновление данных партнера';
     })()
   }, []);
+  const navigate = useNavigate();
   const location = useLocation();
   const [partner, setPartner] = useState(location.state.partner);
 
@@ -33,17 +34,17 @@ function UpdatePartner() {
     };
   }
 
+  async function deletePartner() {
+    const success = await window.api.deletePartner(partner.id);
+    if (success) navigate('/');
+  }
+
   return (
     <>
       <div className="page-heading">
         <img className="logo" src={company_logo} />
         <h1>Обновление данных партнера</h1>
-
-        <Link className="button-right" to={'/'}>
-          <button>
-            Назад
-          </button>
-        </Link>
+        <button className="button-right" onClick={() => { navigate('/') }}>Назад</button>
       </div>
       <form onSubmit={(e) => submitHandler(e)}>
         <label htmlFor="org_type">Тип организации:</label>
@@ -77,6 +78,7 @@ function UpdatePartner() {
 
         <button className='form-button' type="submit">Обновить данные партнера</button>
       </form>
+      <button className="delete-button" onClick={(e) => deletePartner()}>Удалить партнера</button>
     </>
   )
 }

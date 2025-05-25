@@ -89,3 +89,8 @@ form {
   align-self: center;
   background-color: #F4E8D3;
 }
+
+.delete-button {
+  margin-top: 20px;
+  color: red;
+}

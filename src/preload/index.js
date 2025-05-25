@@ -5,6 +5,7 @@ const api = {
   getPartners: () => ipcRenderer.invoke('getPartners'),
   addPartner: (partner) => ipcRenderer.invoke('addPartner', partner),
   updatePartner: (partner) => ipcRenderer.invoke('updatePartner', partner),
+  deletePartner: (id) => ipcRenderer.invoke('deletePartner', id),
 }
 
 if (process.contextIsolated) {
