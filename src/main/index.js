@@ -5,29 +5,61 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 
 import connectDB from './db';
 
-// async function foo(event, data) {
-//   try {
-//     console.log(data)
-//     dialog.showMessageBox({ message: 'message back' })
-//   } catch (e) {
-//     dialog.showErrorBox('Ошибка', e)
-//   }
-// }
-
 async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
   try {
     const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()');
-    // console.log(response.rows);
     return response.rows;
   } catch (e) {
-    dialog.showErrorBox('Ошибка при запросе партнеров', e.message);
+    await dialog.showMessageBox({
+      type: 'error',
+      title: 'Ошибка',
+      message: 'Ошибка при выполнении SQL запроса',
+      detail: `При выполнении SQL запроса возникла ошибка:\n${e.message}\n\nОбратитесь к технической поддержке.`,
+      buttons: ['OK']
+    });
+  }
+}
+
+async function addPartner(event, partner) {
+  try {
+    const confirmation = await dialog.showMessageBox({
+      type: 'warning',
+      title: 'Подтверждение внесения данных в БД',
+      message: 'Вы уверены, что хотите сохранить данные?',
+      detail: 'Это действие добавит новую запись в базу данных.',
+      buttons: ['Сохранить', 'Отмена'],
+      defaultId: 1, // активная кнопка (0 - первая, 1 - вторая)
+      cancelId: 1   // что считать отменой
+    });
+    if (confirmation.response === 1) return false;
+
+    const { org_type, partner_name, director_ceo, email, phone, address, inn, rating } = partner;
+    const response = await global.dbclient.query('SELECT create_partner_with_validation($1, $2, $3, $4, $5, $6, $7, $8) as new_id',
+      [org_type, partner_name, director_ceo, email, phone, address, inn, rating]);
+    const { new_id } = response.rows[0];
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Сохранение завершено',
+      message: `Партнер создан.\nДанные успешно добавлены в таблицу с ID = ${new_id}.`,
+      buttons: ['OK'],
+    });
+    return true;
+  } catch (e) {
+    await dialog.showMessageBox({
+      type: 'error',
+      title: 'Ошибка',
+      message: 'Ошибка при выполнении SQL запроса',
+      detail: e.message,
+      buttons: ['OK']
+    });
+    return false;
   }
 }
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 900,
-    height: 670,
+    height: 850,
     show: false,
     icon: join(__dirname, '../../resources/Мастер пол.png'),
     autoHideMenuBar: true,
@@ -59,8 +91,8 @@ app.whenReady().then(async () => {
 
   global.dbclient = await connectDB();
 
-  // ipcMain.handle('sendSignal', foo)
   ipcMain.handle('getPartners', getPartners);
+  ipcMain.handle('addPartner', addPartner);
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)

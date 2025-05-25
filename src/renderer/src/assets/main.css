@@ -11,6 +11,7 @@
 .page-heading {
   display: flex;
   flex-direction: row;
+  align-items: center;
   width: 700px;
   gap: 50px;
   height: 60px;
@@ -60,4 +61,31 @@
 
 p {
   margin: 15px;
+}
+
+button {
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button-right {
+  margin-left: auto;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+  border: 1px solid black;
+  padding: 25px;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.form-button {
+  margin-top: 20px;
+  width: 350px;
+  align-self: center;
+  background-color: #F4E8D3;
 }

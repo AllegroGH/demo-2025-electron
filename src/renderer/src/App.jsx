@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
-import company_logo from './assets/Мастер пол.png'
+import { useEffect, useState } from 'react';
+import company_logo from './assets/Мастер пол.png';
+import { Link } from 'react-router';
 
 function App() {
   const [partners, setPartners] = useState([]);
@@ -10,6 +11,7 @@ function App() {
 
   useEffect(() => {
     (async () => {
+      document.title = 'Список партнеров';
       const response = await window.api.getPartners();
       setPartners(response);
     })()
@@ -38,6 +40,12 @@ function App() {
           </li>
         })}
       </ul>
+
+      <Link to={'/addPartner'}>
+        <button>
+          Добавить партнера
+        </button>
+      </Link>
     </>
   )
 }
