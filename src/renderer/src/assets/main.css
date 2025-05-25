@@ -4,17 +4,8 @@
   align-items: center;
   justify-content: center;
   font-family: 'Segoe UI';
-  font-size: 16px;
+  font-size: 17px;
   line-height: 0.5;
-}
-
-.logo {
-  width: 60px;
-  height: 60px;
-}
-
-p {
-  margin: 15px;
 }
 
 .page-heading {
@@ -23,12 +14,11 @@ p {
   width: 700px;
   gap: 50px;
   height: 60px;
-  /* margin: 0;
-  padding: 0; */
 }
 
-.card_heading {
-  font-size: 22px;
+.logo {
+  width: 60px;
+  height: 60px;
 }
 
 .partners-list {
@@ -47,9 +37,9 @@ p {
   justify-content: center;
   align-items: center;
   min-width: 700px;
-  justify-content: space-around;
   border: 1px solid black;
   justify-content: space-between;
+  background-color: #F4E8D3;
 }
 
 .partner-card:hover {
@@ -57,32 +47,17 @@ p {
   cursor: pointer;
 }
 
-.partner_sale {
+.partner-card-heading {
   font-size: 22px;
+}
+
+.partner-card-heading-sale {
+  font-size: 22px;
+  align-self: start;
   margin: 15px;
   margin-right: 75px;
 }
 
-.partner-data-info {
-  font-size: 16px;
-}
-
-.card_heading {
-  align-self: start;
-}
-
-/* .partner-data-info {
-  display: flex;
-  flex-direction: column;
-  margin: 14px 40px;
-} */
-
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
+p {
+  margin: 15px;
 }

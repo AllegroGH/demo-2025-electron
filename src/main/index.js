@@ -1,7 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+// import icon from '../../resources/icon.png'
 
 import connectDB from './db';
 
@@ -16,11 +16,11 @@ import connectDB from './db';
 
 async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
   try {
-    const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()'); // ";" для pg в конце запроса ставить не обязательно
-    console.log(response.rows);
+    const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()');
+    // console.log(response.rows);
     return response.rows;
   } catch (e) {
-    dialog.showErrorBox('Ошибка', e); // эта ошибка на фронт не выводится (почему-то)
+    dialog.showErrorBox('Ошибка при запросе партнеров', e.message);
   }
 }
 
@@ -29,8 +29,9 @@ function createWindow() {
     width: 900,
     height: 670,
     show: false,
+    icon: join(__dirname, '../../resources/Мастер пол.png'),
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    //...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false

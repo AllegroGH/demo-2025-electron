@@ -12,7 +12,6 @@ function App() {
     (async () => {
       const response = await window.api.getPartners();
       setPartners(response);
-      console.log(response);
     })()
   }, [])
 
@@ -24,25 +23,21 @@ function App() {
       </div>
       <ul className='partners-list'>
         {partners.map((partner) => {
-          // return <li className="partner-card" key={partner.id} onClick={() => { navigate('/update', { state: { partner } }) }}>
           return <li className="partner-card" key={partner.id}>
-            <div className="partner-data">
-              <p className="card_heading">{partner.org_type} | {partner.partner_name}</p>
-              <div className="partner-data-info">
-                <p>{partner.director_ceo}</p>
-                <p>{partner.phone}</p>
+            <div>
+              <p className="partner-card-heading">{partner.org_type} | {partner.partner_name}</p>
+              <div>
+                <p>Директор: {partner.director_ceo}</p>
+                <p>+7 {partner.phone}</p>
                 <p>Рейтинг: {partner.rating}</p>
               </div>
             </div>
-            <div className="partner_sale partner-data card_heading">
+            <div className="partner-card-heading-sale">
               {partner.discount_percent}%
             </div>
           </li>
         })}
       </ul>
-
-      {/* <img alt="logo" className="logo" src={company_logo} />
-      <h1>Hello, world!</h1> */}
     </>
   )
 }
