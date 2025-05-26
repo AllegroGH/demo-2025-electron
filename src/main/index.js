@@ -5,9 +5,10 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import connectDB from './db';
 import dbOffline from './dbOffline';
 
-// если для enableDbOfflineMode установить true, то будет использоваться локальная БД (без подключения к реальной)
+// Если для enableDbOfflineMode установить значение true,
+// то будет использоваться локальная БД (без подключения к СУБД) // сохранена в main/dbOffline.js
 // таким образом можно оперативно запустить приложение и посмотреть его интерфейс
-// будет все работать, кроме действий, выполняющих реальные SQL запросы
+// будет все работать, кроме реальных SQL запросов
 const enableDbOfflineMode = false;
 
 async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
