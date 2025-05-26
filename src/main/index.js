@@ -1,14 +1,15 @@
-import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron';
+import { join } from 'path';
+import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 // import icon from '../../resources/icon.png'
-
 import connectDB from './db';
+import dbOffline from './dbOffline';
 
 async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
   try {
     const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()');
     return response.rows;
+    // return dbOffline;
   } catch (e) {
     await dialog.showMessageBox({
       type: 'error',
@@ -101,7 +102,7 @@ async function deletePartner(event, id) {
       title: 'Подтверждение внесения данных в БД',
       message: 'Вы уверены, что хотите удалить партнера?',
       detail: 'Это действие удалит существующую запись из базы данных.',
-      buttons: ['Сохранить', 'Отмена'],
+      buttons: ['Удалить', 'Отмена'],
       defaultId: 1, // активная кнопка (0 - первая, 1 - вторая)
       cancelId: 1   // что считать отменой
     });
