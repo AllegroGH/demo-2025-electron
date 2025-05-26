@@ -5,11 +5,18 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import connectDB from './db';
 import dbOffline from './dbOffline';
 
+// если для enableDbOfflineMode установить true, то будет использоваться локальная БД (без подключения к реальной)
+// таким образом можно оперативно запустить приложение и посмотреть его интерфейс
+// будет все работать, кроме действий, выполняющих реальные SQL запросы
+const enableDbOfflineMode = false;
+
 async function getPartners() {  // при старте приложения эта функция (почему-то) вызывается 2 раза
   try {
-    const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()');
-    return response.rows;
-    // return dbOffline;
+    if (enableDbOfflineMode) return dbOffline;
+    else {
+      const response = await global.dbclient.query('SELECT * FROM get_partners_with_discount()');
+      return response.rows;
+    }
   } catch (e) {
     await dialog.showMessageBox({
       type: 'error',
@@ -162,7 +169,7 @@ function createWindow() {
 app.whenReady().then(async () => {
   electronApp.setAppUserModelId('com.electron')
 
-  global.dbclient = await connectDB();
+  if (!enableDbOfflineMode) global.dbclient = await connectDB();
 
   ipcMain.handle('getPartners', getPartners);
   ipcMain.handle('addPartner', addPartner);
